@@ -67,12 +67,11 @@ class _EmailWidgetState extends State<EmailWidget> {
           Theme.of(context).colorScheme.surface,
         ),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.fromLTRB(24, 12, 12, 12),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Padding(padding: EdgeInsets.only(right: 12.0)),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
