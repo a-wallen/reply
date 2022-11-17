@@ -17,16 +17,10 @@ class AnimatedFloatingActionButton extends StatefulWidget {
 class _AnimatedFloatingActionButton extends State<AnimatedFloatingActionButton> {
   late Animation<double> scaleAnimation;
   late Animation<ShapeBorder?> shapeAnimation;
-  late Color backgroundColor;
-  late Color foregroundColor;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    backgroundColor = colorScheme.tertiaryContainer;
-    foregroundColor = colorScheme.onTertiaryContainer;
+  void initState() {
+    super.initState();
 
     scaleAnimation = CurvedAnimation(
       parent: widget.animation,
@@ -43,11 +37,12 @@ class _AnimatedFloatingActionButton extends State<AnimatedFloatingActionButton> 
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
     return ScaleTransition(
       scale: scaleAnimation,
       child: FloatingActionButton(
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
+        backgroundColor: colorScheme.tertiaryContainer,
+        foregroundColor: colorScheme.onTertiaryContainer,
         onPressed: widget.onPressed,
         child: widget.child,
       ),
