@@ -5,7 +5,7 @@ class SizeAnimation extends CurvedAnimation {
   SizeAnimation(Animation<double> parent) : super(
     parent: parent,
     curve: const Interval(
-      250 / transitionLength, 1000 / transitionLength,
+      250 / transitionLength / 2, 1000 / transitionLength,
       curve: Curves.easeInOutCubicEmphasized,
     ),
     reverseCurve: Interval(

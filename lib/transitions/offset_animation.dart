@@ -5,7 +5,7 @@ class OffsetAnimation extends CurvedAnimation {
   OffsetAnimation(Animation<double> parent) : super(
     parent: parent,
     curve: const Interval(
-      500 / transitionLength, 1.0,
+      500 / transitionLength / 2, 1.0,
       curve: Curves.easeInOutCubicEmphasized,
     ),
     reverseCurve: Interval(

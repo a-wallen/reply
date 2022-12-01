@@ -58,7 +58,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     super.initState();
 
     controller = AnimationController(
-      duration: Duration(milliseconds: transitionLength.toInt() * 2),
+      duration: Duration(milliseconds: transitionLength.toInt()),
       value: 0,
       vsync: this,
     );
@@ -210,7 +210,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
           ),
           bottomNavigationBar: BarTransition(
             animation: barAnimation,
-            backgroundColor: backgroundColor,
+            backgroundColor: Colors.white,
             child: NavigationBar(
               elevation: 0,
               destinations: destinations.map<NavigationDestination>((_Destination d) {
