@@ -49,8 +49,8 @@ class Feed extends StatefulWidget {
 class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
   late ColorScheme colorScheme = Theme.of(context).colorScheme;
   late final AnimationController controller;
-  late final railAnimation;
-  late final barAnimation;
+  late final CurvedAnimation railAnimation;
+  late final ReverseAnimation barAnimation;
   int selectedIndex = 0;
   bool controllerInitialized = false;
 
@@ -58,7 +58,8 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     super.initState();
 
     controller = AnimationController(
-      duration: Duration(milliseconds: transitionLength.toInt()),
+      reverseDuration: MaterialDuration.max.value,
+      duration: MaterialDuration.extraLong4.value,
       value: 0,
       vsync: this,
     );
@@ -71,8 +72,8 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     );
 
     railAnimation = CurvedAnimation(
-        parent: controller,
-        curve: const Interval(0.5, 1.0),
+      parent: controller,
+      curve: const Interval(0.5, 1.0),
     );
   }
 
@@ -145,6 +146,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
                       const SizedBox(height: 8),
                       AnimatedFloatingActionButton(
                         animation: railAnimation,
+                        elevation: 0,
                         onPressed: () { },
                         child: const Icon(Icons.add),
                       ),

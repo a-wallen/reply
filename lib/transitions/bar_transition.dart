@@ -18,7 +18,6 @@ class _BarTransition extends State<BarTransition> {
   late final Animation<Offset> offsetAnimation;
   late final Animation<double> heightAnimation;
 
-
   @override
   void initState() {
     super.initState();

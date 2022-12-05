@@ -1,13 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
-import '../transitions/constants.dart';
-
 class AnimatedFloatingActionButton extends StatefulWidget {
-  const AnimatedFloatingActionButton({ super.key, required this.animation, this.onPressed, this.child });
+  const AnimatedFloatingActionButton({ super.key, required this.animation, this.onPressed, this.elevation, this.child });
 
   final Animation<double> animation;
   final VoidCallback? onPressed;
   final Widget? child;
+  final double? elevation;
 
   @override
   State<AnimatedFloatingActionButton> createState() => _AnimatedFloatingActionButton();
@@ -16,7 +17,7 @@ class AnimatedFloatingActionButton extends StatefulWidget {
 
 class _AnimatedFloatingActionButton extends State<AnimatedFloatingActionButton> {
   late Animation<double> scaleAnimation;
-  late Animation<ShapeBorder?> shapeAnimation;
+  late Animation<double> shapeAnimation;
 
   @override
   void initState() {
@@ -25,15 +26,28 @@ class _AnimatedFloatingActionButton extends State<AnimatedFloatingActionButton> 
     scaleAnimation = CurvedAnimation(
       parent: widget.animation,
       curve: const Interval(
-        750 / transitionLength, 1000 / transitionLength,
+        3 / 5, 4 / 5,
         curve: Curves.easeInOutCubicEmphasized
       ),
       reverseCurve: Interval(
-        0, 250 / transitionLength,
+        0, 1 / 5,
+        curve: Curves.easeInOutCubicEmphasized.flipped,
+      ),
+    );
+
+    shapeAnimation = CurvedAnimation(
+      parent: widget.animation,
+      curve: const Interval(
+        2 / 5, 3 / 5,
+        curve: Curves.easeInOutCubicEmphasized
+      ),
+      reverseCurve: Interval(
+        0, 1 / 10,
         curve: Curves.easeInOutCubicEmphasized.flipped,
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +55,12 @@ class _AnimatedFloatingActionButton extends State<AnimatedFloatingActionButton> 
     return ScaleTransition(
       scale: scaleAnimation,
       child: FloatingActionButton(
+        elevation: widget.elevation,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(lerpDouble(30, 15, shapeAnimation.value)!),
+            )
+        ),
         backgroundColor: colorScheme.tertiaryContainer,
         foregroundColor: colorScheme.onTertiaryContainer,
         onPressed: widget.onPressed,
