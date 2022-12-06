@@ -5,12 +5,12 @@ class OffsetAnimation extends CurvedAnimation {
     parent: parent,
     curve: const Interval(
       2 / 5,
-      1,
+      3 / 5,
       curve: Curves.easeInOutCubicEmphasized,
     ),
     reverseCurve: Interval(
-      0,
-      1 / 5,
+      4 / 5,
+      1,
       curve: Curves.easeInOutCubicEmphasized.flipped,
     ),
   );
