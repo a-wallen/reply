@@ -50,6 +50,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
   late ColorScheme colorScheme = Theme.of(context).colorScheme;
   late final AnimationController controller;
   late final CurvedAnimation railAnimation;
+  late final CurvedAnimation railFabAnimation;
   late final ReverseAnimation barAnimation;
   int selectedIndex = 0;
   bool controllerInitialized = false;
@@ -67,13 +68,19 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     barAnimation = ReverseAnimation(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0.0, 0.5),
+        curve: const Interval(0, 2 / 5),
       ),
     );
 
     railAnimation = CurvedAnimation(
       parent: controller,
-      curve: const Interval(0.5, 1.0),
+      curve: const Interval(0, 4 / 5),
+    );
+
+    railFabAnimation = CurvedAnimation(
+      parent: railAnimation,
+      curve: const Interval(3 / 5, 1),
+      reverseCurve: const Interval(0, 3 / 5),
     );
   }
 
@@ -145,7 +152,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
                       ),
                       const SizedBox(height: 8),
                       AnimatedFloatingActionButton(
-                        animation: railAnimation,
+                        animation: railFabAnimation,
                         elevation: 0,
                         onPressed: () { },
                         child: const Icon(Icons.add),
@@ -215,6 +222,7 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
             backgroundColor: Colors.white,
             child: NavigationBar(
               elevation: 0,
+              backgroundColor: Colors.white,
               destinations: destinations.map<NavigationDestination>((_Destination d) {
                 return NavigationDestination(
                   icon: Icon(d.icon),
