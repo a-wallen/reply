@@ -68,19 +68,19 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     barAnimation = ReverseAnimation(
       CurvedAnimation(
         parent: controller,
-        curve: const Interval(0, 2 / 5),
+        curve: const Interval(0, 1 / 5),
       ),
     );
 
     railAnimation = CurvedAnimation(
       parent: controller,
-      curve: const Interval(0, 4 / 5),
+      curve: const Interval(0 / 5, 4 / 5),
     );
 
     railFabAnimation = CurvedAnimation(
       parent: railAnimation,
       curve: const Interval(3 / 5, 1),
-      reverseCurve: const Interval(0, 3 / 5),
+      reverseCurve: const Interval(0, 1), // the FAB shouldn't disappear
     );
   }
 
