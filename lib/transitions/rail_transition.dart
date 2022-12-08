@@ -42,13 +42,18 @@ class _RailTransition extends State<RailTransition> {
     return ClipRect(
       child: DecoratedBox(
         decoration: BoxDecoration(color: widget.backgroundColor),
-        child: Align(
-          alignment: Alignment.topLeft,
-          widthFactor: widthAnimation.value,
-          child: FractionalTranslation(
-            translation: offsetAnimation.value,
-            child: widget.child,
-          ),
+        child: AnimatedBuilder(
+          animation: widthAnimation,
+          builder: (context, child) {
+            return Align(
+              alignment: Alignment.topLeft,
+              widthFactor: widthAnimation.value,
+              child: FractionalTranslation(
+                translation: offsetAnimation.value,
+                child: widget.child,
+              ),
+            );
+          },
         ),
       ),
     );

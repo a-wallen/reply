@@ -80,9 +80,8 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
     );
 
     railFabAnimation = CurvedAnimation(
-      parent: railAnimation,
+      parent: controller,
       curve: const Interval(3 / 5, 1),
-      reverseCurve: const Interval(0, 1), // the FAB shouldn't disappear
     );
   }
 
@@ -172,42 +171,51 @@ class _FeedState extends State<Feed> with SingleTickerProviderStateMixin {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                   color: backgroundColor,
                   child: OneTwoTransition(
                     animation: railAnimation,
-                    one: ListView(
-                      children: [
-                        SearchBar(currentUser: widget.currentUser),
-                        const Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                        ...List.generate(data.emails.length, (int index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: EmailWidget(
-                              email: data.emails[index],
-                              onSelected: () {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
-                              },
-                              selected: selectedIndex == index,
-                            ),
-                          );
-                        }),
-                      ],
+                    one: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: ListView(
+                        children: [
+                          const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                          SearchBar(currentUser: widget.currentUser),
+                          const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                          ...List.generate(data.emails.length, (int index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: EmailWidget(
+                                email: data.emails[index],
+                                onSelected: () {
+                                  setState(() {
+                                    selectedIndex = index;
+                                  });
+                                },
+                                selected: selectedIndex == index,
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
                     ),
-                    two: ListView(
-                      children:  List.generate(data.replies.length, (int index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: EmailWidget(
-                            email: data.replies[index],
-                            isPreview: false,
-                            isThreaded: true,
-                            showHeadline: index == 0,
-                          ),
-                        );
-                      }),
+                    two: Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: ListView(
+                        children:  [
+                          const Padding(padding: EdgeInsets.only(bottom: 8.0)),
+                          ...List.generate(data.replies.length, (int index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: EmailWidget(
+                                email: data.replies[index],
+                                isPreview: false,
+                                isThreaded: true,
+                                showHeadline: index == 0,
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
                     ),
                   ),
                 ),
